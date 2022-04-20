@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="lycan" ng-controller="authCtrl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lycan</title>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="./assets/js/angular.js"></script>
+    <script src="./assets/js/angular-route.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+    <script src="./app.js"></script>
+    <script src="./index.js"></script>
+
+</head>
+
+<body>
+    <!-- partial:index.partial.html -->
+    <div id="container">
+        <canvas class="center-block" id="canvasOutput" width=320 height=240></canvas>
+    </div>
+    <div class="text-center">
+        <p>
+            <form action="#">
+                <input type="radio" id="face" name="😑" value="face" checked hidden>
+                <input type="radio" id="eye" name="👁️" value="eye" hidden>
+                <!-- <button id="capture">Capture</button> <br> </br>
+
+                <button id="checked">Checked</button> -->
+
+                <canvas id="canvas" style="overflow:auto" hidden></canvas>
+
+
+            </form>
+        </p>
+    </div>
+    <div class="invisible">
+        <video id="video" class="hidden">Your browser does not support the video tag.</video>
+    </div>
+    </div>
+
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.min.js"></script>
+    <script>
+        var Module = {
+            wasmBinaryFile: 'https://huningxin.github.io/opencv.js/build/wasm/opencv_js.wasm',
+            preRun: [function() {
+                Module.FS_createPreloadedFile('/', 'haarcascade_eye.xml', 'https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_eye.xml', true, false);
+                Module.FS_createPreloadedFile('/', 'haarcascade_frontalface_default.xml', 'https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml', true, false);
+                Module.FS_createPreloadedFile('/', 'haarcascade_profileface.xml', 'https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_profileface.xml', true, false);
+            }],
+            _main: function() {
+                opencvIsReady();
+            }
+        };
+    </script>
+
+    <script async src="https://huningxin.github.io/opencv.js/build/wasm/opencv.js"></script>
+    <!-- partial -->
+    <script src='https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.0'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2'></script>
+    <script src="./assets/script.js"></script>
+
+    <script src='./assets/js/dirPagination.js'></script>
+    <script src="./auth.js"></script>
+</body>
+
+
+</html>
