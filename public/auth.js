@@ -82,7 +82,7 @@ angular.module('lycan').controller('authCtrl', function($scope, $timeout) {
         });
 
         $.ajax({
-                url: "https://southeastasia.api.cognitive.microsoft.com/customvision/v3.0/Prediction/3f4b7c38-9a68-4378-8b9e-50a07a9b75da/classify/iterations/Iteration7/image?" + $.param(params),
+                url: "https://southeastasia.api.cognitive.microsoft.com/customvision/v3.0/Prediction/3f4b7c38-9a68-4378-8b9e-50a07a9b75da/classify/iterations/Iteration12/image?" + $.param(params),
                 beforeSend: function(xhrObj) {
                     // Request headers
                     xhrObj.setRequestHeader("Prediction-Key", "411a75f3d0aa4d6c81f9d1c5934deed1");
@@ -97,11 +97,26 @@ angular.module('lycan').controller('authCtrl', function($scope, $timeout) {
 
                 console.log(Math.round(data.predictions[0].probability * 100))
 
-                var prob = Math.round(data.predictions[0].probability * 100);
-                if (prob >= 98) {
 
-                    window.location.href = "./"
-                }
+
+                console.log(data)
+
+                var obj = data.predictions;
+
+                angular.forEach(obj, function(value, key) {
+                    console.log(value.tagName, value.probability);
+
+                    var prob = Math.round(value.probability * 100)
+
+                    console.log(prob);
+
+                    if (prob >= 98 && value.tagName === 'Jaggy') {
+                        window.location.href = "./"
+                        localStorage.setItem('Username', 'Jaggy')
+                    }
+                });
+
+
 
             })
             .fail(function(err0r) {
