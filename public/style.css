@@ -14,8 +14,12 @@ body {
 }
 
 body {
-    background: #a02323f0;
-    color: rgb(204, 28, 28);
+    /* background: #a02323f0;
+    color: rgb(204, 28, 28); */
+    background-image: url('./bgred.jpg')!important;
+    /* background-repeat: no-repeat!important;
+    background-attachment: fixed!important;
+    background-size: 100% 100%!important; */
 }
 
 .component {

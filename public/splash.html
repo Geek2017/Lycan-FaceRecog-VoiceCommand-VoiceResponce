@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="lycan" ng-controller="splashCtrl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lycan</title>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="./assets/js/angular.js"></script>
+    <script src="./assets/js/angular-route.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+    <script src="./app.js"></script>
+    <script src="./index.js"></script>
+
+</head>
+
+<body style="background-color: red;">
+
+    <div class="splash">
+        <video autoplay playsinline muted loop>          
+            <source src="./assets/splash.mp4" type="video/mp4">
+        </video>
+
+        <audio controls autoplay hidden>
+        <source src="./assets/music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+        </audio>
+    </div>
+
+
+    <script src='./assets/js/dirPagination.js'></script>
+    <script src="./splash.js"></script>
+</body>
+
+
+</html>

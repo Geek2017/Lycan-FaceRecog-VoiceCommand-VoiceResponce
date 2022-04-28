@@ -27,8 +27,9 @@ function startCamera() {
         "canplay",
         function(ev) {
             if (!streaming) {
-                videoWidth = video.videoWidth;
-                videoHeight = video.videoHeight;
+
+                videoWidth = 290;
+                videoHeight = 270
                 video.setAttribute("width", videoWidth);
                 video.setAttribute("height", videoHeight);
                 canvasOutput.width = videoWidth;
@@ -79,7 +80,6 @@ function startVideoProcessing() {
     faceClassifier = new cv.CascadeClassifier();
     faceClassifier.load("haarcascade_frontalface_default.xml");
 
-    console.log(faceClassifier);
 
     eyeClassifier = new cv.CascadeClassifier();
     eyeClassifier.load("haarcascade_eye.xml");
@@ -148,7 +148,7 @@ function processVideo() {
     }
     canvasOutputCtx.drawImage(canvasInput, 0, 0, videoWidth, videoHeight);
 
-    console.log(faces.length)
+    // console.log(faces.length)
 
     if (faces.length > 0) {
         localStorage.setItem('stat', 1)

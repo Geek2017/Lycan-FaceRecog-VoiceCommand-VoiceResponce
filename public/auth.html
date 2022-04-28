@@ -15,29 +15,26 @@
 </head>
 
 <body style="background-color: red;">
-    <!-- partial:index.partial.html -->
-    <div id="container">
-        <canvas class="center-block" id="canvasOutput" width=320 height=240></canvas>
-    </div>
-    <div class="text-center">
-        <p>
-            <form action="#">
-                <input type="radio" id="face" name="😑" value="face" checked hidden>
-                <input type="radio" id="eye" name="👁️" value="eye" hidden>
-                <!-- <button id="capture">Capture</button> <br> </br>
 
-                <button id="checked">Checked</button> -->
-
-                <canvas id="canvas" style="overflow:auto" hidden></canvas>
-
-
-            </form>
-        </p>
+    <div class="auth">
+        <div id="container">
+            <canvas class="center-block" id="canvasOutput" width=320 height=240></canvas>
+        </div>
+        <div class="text-center">
+            <p>
+                <form action="#">
+                    <input type="radio" id="face" name="😑" value="face" checked hidden>
+                    <input type="radio" id="eye" name="👁️" value="eye" hidden>
+                    <canvas id="canvas" style="overflow:auto" hidden></canvas>
+                </form>
+            </p>
+        </div>
+        <div class="invisible">
+            <video id="video" class="hidden">Your browser does not support the video tag.</video>
+        </div>
     </div>
-    <div class="invisible">
-        <video id="video" class="hidden">Your browser does not support the video tag.</video>
-    </div>
-    </div>
+
+
 
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>

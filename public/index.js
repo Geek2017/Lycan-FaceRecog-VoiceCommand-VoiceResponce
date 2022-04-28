@@ -1,5 +1,14 @@
 angular.module('lycan').controller('indexCtrl', function($scope, $timeout) {
 
+    var config = {
+        apiKey: "AIzaSyBvJ8r3ZY1r8UEVcSmGPN6IIjkx_6W0hJc",
+        authDomain: "lycan-iot-db.firebaseapp.com",
+        databaseURL: "https://lycan-iot-db-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "lycan-iot-db"
+    };
+
+    firebase.initializeApp(config);
+
 
     var settings = {
         "url": "https://api.ipgeolocation.io/ipgeo?apiKey=ea0f75632611493a9acdc8a887bd1409",
@@ -9,6 +18,7 @@ angular.module('lycan').controller('indexCtrl', function($scope, $timeout) {
 
     $.ajax(settings).done(function(response) {
         console.log(response);
+        localStorage.setItem('location', response.city + "," + response.state_prov + "," + response.country_name)
     });
 
     var auth = localStorage.getItem('stat');
@@ -19,7 +29,7 @@ angular.module('lycan').controller('indexCtrl', function($scope, $timeout) {
 
     localStorage.setItem('count', 0)
 
-
+    var location = localStorage.getItem('location');
 
     setTimeout(() => {
         // alert(1)
@@ -27,38 +37,138 @@ angular.module('lycan').controller('indexCtrl', function($scope, $timeout) {
         speechSynthesis.speak(message);
 
 
-        localStorage.setItem('count', 1)
+        // localStorage.setItem('count', 1)
     }, 2000);
 
 
     $(".alarmoff").on("click", function() {
-        var alarmoff = new SpeechSynthesisUtterance('Turning off the Alarm!');
-        speechSynthesis.speak(alarmoff);
+        var command = {
+            command: {
+                alarm: 0,
+                engine: 0,
+                lock: 0,
+            },
+            state: 1
+        }
+
+        var updates = {};
+        updates['/iotdata/sadkfhsajkd2312312'] = command;
+        firebase.database().ref().update(updates);
+
+        if (updates) {
+            console.log(updates)
+            var alarmoff = new SpeechSynthesisUtterance('Turning off the Alarm!');
+            speechSynthesis.speak(alarmoff);
+        }
     });
 
     $(".alarmon").on("click", function() {
-        var alarmon = new SpeechSynthesisUtterance('Turning on the Alarm!');
-        speechSynthesis.speak(alarmon);
+        var command = {
+            command: {
+                alarm: 1,
+                engine: 0,
+                lock: 0,
+            },
+            state: 1
+        }
+
+        var updates = {};
+        updates['/iotdata/sadkfhsajkd2312312'] = command;
+        firebase.database().ref().update(updates);
+
+        if (updates) {
+            console.log(updates)
+            var alarmon = new SpeechSynthesisUtterance('Turning on the Alarm!');
+            speechSynthesis.speak(alarmon);
+        }
     });
 
     $(".eginestart").on("click", function() {
-        var eginestart = new SpeechSynthesisUtterance('Starting your Engine!');
-        speechSynthesis.speak(eginestart);
+
+        var command = {
+            command: {
+                alarm: 0,
+                engine: 1,
+                lock: 0,
+            },
+            state: 1
+        }
+
+        var updates = {};
+        updates['/iotdata/sadkfhsajkd2312312'] = command;
+        firebase.database().ref().update(updates);
+
+        if (updates) {
+            console.log(updates)
+            var eginestart = new SpeechSynthesisUtterance('Starting your Engine!');
+            speechSynthesis.speak(eginestart);
+        }
+
     });
 
     $(".egineoff").on("click", function() {
-        var egineoff = new SpeechSynthesisUtterance('Shuttingdown your Engine!');
-        speechSynthesis.speak(egineoff);
+
+        var command = {
+            command: {
+                alarm: 0,
+                engine: 0,
+                lock: 0,
+            },
+            state: 1
+        }
+
+        var updates = {};
+        updates['/iotdata/sadkfhsajkd2312312'] = command;
+        firebase.database().ref().update(updates);
+
+        if (updates) {
+            console.log(updates)
+            var egineoff = new SpeechSynthesisUtterance('Shuttingdown your Engine!');
+            speechSynthesis.speak(egineoff);
+        }
     });
 
     $(".lockon").on("click", function() {
-        var lockon = new SpeechSynthesisUtterance('Guard on!');
-        speechSynthesis.speak(lockon);
+
+        var command = {
+            command: {
+                alarm: 0,
+                engine: 0,
+                lock: 1,
+            },
+            state: 1
+        }
+
+        var updates = {};
+        updates['/iotdata/sadkfhsajkd2312312'] = command;
+        firebase.database().ref().update(updates);
+
+        if (updates) {
+            console.log(updates)
+            var lockon = new SpeechSynthesisUtterance('Guard on!');
+            speechSynthesis.speak(lockon);
+        }
     });
 
     $(".lockoff").on("click", function() {
-        var lockoff = new SpeechSynthesisUtterance('Guard off!');
-        speechSynthesis.speak(lockoff);
+        var command = {
+            command: {
+                alarm: 0,
+                engine: 0,
+                lock: 0,
+            },
+            state: 1
+        }
+
+        var updates = {};
+        updates['/iotdata/sadkfhsajkd2312312'] = command;
+        firebase.database().ref().update(updates);
+
+        if (updates) {
+            console.log(updates)
+            var lockoff = new SpeechSynthesisUtterance('Guard off!');
+            speechSynthesis.speak(lockoff);
+        }
     });
 
 
@@ -89,32 +199,16 @@ angular.module('lycan').controller('indexCtrl', function($scope, $timeout) {
 
         var scount = localStorage.getItem('count');
 
-        // recognition.onstart = function() {
-        var great = new SpeechSynthesisUtterance('yes' + $scope.username + " " + "how can I help you?");
-        if (scount === '1') {
-            speechSynthesis.speak(great);
-
+        recognition.onstart = function() {
+            $(".hello").remove();
             action.innerHTML = '<h5 id="soutput">Im listening, please speak...</h5>'
-
-            // speechSynthesis.onend = function(event) {
-            //     console.log('Utterance has finished being spoken after ' + event.elapsedTime + ' seconds.');
-            //     recognition.start();
-
-            // };
-
-        }
+        };
 
 
-
-        // };
 
         recognition.onspeechend = function() {
-            action.innerHTML = '<h5 id="soutput">Im listening, please speak...</h5>'
-            recognition.start();
-            // action.innerHTML = '<h5 id="soutput">SynthesisUtterance Stop</h5>';
-            // var stops = new SpeechSynthesisUtterance("I Stop listening hope your done, if not please try  again");
-            // speechSynthesis.speak(stops);
-            // recognition.stop();
+            action.innerHTML = '<h5 id="soutput">speechSynthesis stop click luna to commence</h5>'
+            recognition.stop();
         }
 
         // This runs when the speech recognition service returns result
@@ -125,32 +219,129 @@ angular.module('lycan').controller('indexCtrl', function($scope, $timeout) {
 
             if (transcript === 'engine start') {
                 // alert('Starting your engine')
-                var engine = new SpeechSynthesisUtterance('Certainly! Starting your engine now!');
-                speechSynthesis.speak(engine);
+                var command = {
+                    command: {
+                        alarm: 0,
+                        engine: 1,
+                        lock: 0,
+                    },
+                    state: 1
+                }
+
+                var updates = {};
+                updates['/iotdata/sadkfhsajkd2312312'] = command;
+                firebase.database().ref().update(updates);
+
+                if (updates) {
+                    console.log(updates)
+                    var engine = new SpeechSynthesisUtterance('Certainly! Starting your engine now!');
+                    speechSynthesis.speak(engine);
+                }
 
             } else if (transcript === 'engine off') {
-                // alert('shutting down engine')
-                var shutting = new SpeechSynthesisUtterance('Certainly! shutting down your engine!');
-                speechSynthesis.speak(shutting);
+                // alert('shutting down engine')           
+                var command = {
+                    command: {
+                        alarm: 0,
+                        engine: 0,
+                        lock: 0,
+                    },
+                    state: 1
+                }
+
+                var updates = {};
+                updates['/iotdata/sadkfhsajkd2312312'] = command;
+                firebase.database().ref().update(updates);
+
+                if (updates) {
+                    console.log(updates)
+                    var shutting = new SpeechSynthesisUtterance('Certainly! shutting down your engine!');
+                    speechSynthesis.speak(shutting);
+
+                }
 
             } else if (transcript === 'lockdown') {
                 // alert('Locking your engine')
-                var locking = new SpeechSynthesisUtterance('Certainly! Locking your engine!');
-                speechSynthesis.speak(locking);
+
+                var command = {
+                    command: {
+                        alarm: 0,
+                        engine: 1,
+                        lock: 0,
+                    },
+                    state: 1
+                }
+
+                var updates = {};
+                updates['/iotdata/sadkfhsajkd2312312'] = command;
+                firebase.database().ref().update(updates);
+
+                if (updates) {
+                    console.log(updates)
+                    var locking = new SpeechSynthesisUtterance('Certainly! Locking on your engine!');
+                    speechSynthesis.speak(locking);
+                }
+
+            } else if (transcript === 'unlock') {
+                // alert('Locking your engine')
+
+                var command = {
+                    command: {
+                        alarm: 0,
+                        engine: 1,
+                        lock: 0,
+                    },
+                    state: 1
+                }
+
+                var updates = {};
+                updates['/iotdata/sadkfhsajkd2312312'] = command;
+                firebase.database().ref().update(updates);
+
+                if (updates) {
+                    console.log(updates)
+                    var locking = new SpeechSynthesisUtterance('Certainly! unlocking your engine!');
+                    speechSynthesis.speak(locking);
+                }
 
             } else if (transcript === 'alarm off') {
                 // alert('Alarm turn off')
-                var alarm = new SpeechSynthesisUtterance('Certainly! turnning alarm off!');
-                speechSynthesis.speak(alarm);
+
+                var command = {
+                    command: {
+                        alarm: 0,
+                        engine: 0,
+                        lock: 0,
+                    },
+                    state: 1
+                }
+
+                var updates = {};
+                updates['/iotdata/sadkfhsajkd2312312'] = command;
+                firebase.database().ref().update(updates);
+
+                if (updates) {
+                    console.log(updates)
+                    var alarm = new SpeechSynthesisUtterance('Certainly! turnning alarm off!');
+                    speechSynthesis.speak(alarm);
+                }
 
             } else if (transcript === 'find me') {
                 // alert('Alarm turn off')
-                var alarm = new SpeechSynthesisUtterance('Certainly! turnning alarm off!');
-                speechSynthesis.speak(alarm);
+                var tract = 'you are at' + ',' + location
+
+
+                var place = new SpeechSynthesisUtterance(tract);
+                speechSynthesis.speak(place);
+
+                console.log(tract);
 
             } else {
-                var invalid = new SpeechSynthesisUtterance("sorry I did not catch that, Please try again");
+
+                var invalid = new SpeechSynthesisUtterance("Sorry I did not catch that, Please try again");
+
                 output.innerHTML = "<b>INVALID COMMAND:<br> I hear! " + transcript + " Please try again </b> ";
+
                 speechSynthesis.speak(invalid);
             }
 

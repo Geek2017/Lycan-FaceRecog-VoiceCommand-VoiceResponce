@@ -1,5 +1,13 @@
 angular.module('lycan').controller('authCtrl', function($scope, $timeout) {
 
+    // setTimeout(() => {
+    //     $('video').trigger('pause');
+    //     $('audio').trigger('pause');
+
+    //     $(".splash").remove();
+    //     // $(".core").show();
+    // }, 12000);
+
 
     var video = document.querySelector("#video");
 

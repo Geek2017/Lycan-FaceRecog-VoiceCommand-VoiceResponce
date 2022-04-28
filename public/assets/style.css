@@ -10,8 +10,11 @@ canvas {
     text-align: center;
 }
 
-div {
-    margin: 10px;
+.auth {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .center-block {
@@ -24,4 +27,35 @@ label {
     width: 25%;
     vertical-align: top;
     font: 16px "Lucida Grande", sans-serif;
+}
+
+canvas {
+    border-radius: 220px;
+    outline-style: double;
+    outline-color: aliceblue;
+    outline-width: 6px;
+}
+
+.center-screen {
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+body {
+    background-image: url('./bk.gif');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+video {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.txtcommand {
+    top: 55px;
 }
