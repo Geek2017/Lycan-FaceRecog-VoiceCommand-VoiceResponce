@@ -47,7 +47,7 @@ angular.module('lycan').controller('authCtrl', function($scope, $timeout) {
         canvas.height = window.innerHeight;
         canvas.getContext('2d').drawImage(video, 0, 0, window.innerWidth, window.innerHeight);
         resultb64 = canvas.toDataURL();
-        $("printresult").innerHTML = canvas.toDataURL();
+        // $("printresult").innerHTML = canvas.toDataURL();
         base64 = resultb64;
 
         setTimeout(() => {

@@ -31,14 +31,12 @@ angular.module('lycan').controller('indexCtrl', function($scope, $timeout) {
 
     var location = localStorage.getItem('location');
 
-    setTimeout(() => {
-        // alert(1)
-        var message = new SpeechSynthesisUtterance(txts);
-        speechSynthesis.speak(message);
-
-
-        // localStorage.setItem('count', 1)
-    }, 2000);
+    // setTimeout(() => {
+    //     // alert(1)
+    //     var message = new SpeechSynthesisUtterance(txts);
+    //     speechSynthesis.speak(message);
+    //     // localStorage.setItem('count', 1)
+    // }, 2000);
 
 
     $(".alarmoff").on("click", function() {
@@ -175,9 +173,11 @@ angular.module('lycan').controller('indexCtrl', function($scope, $timeout) {
     if (auth == '1') {
         setTimeout(() => {
             $("#cn-button").trigger("click");
+            $("#cn-button").hide();
+            $("#luna").show();
         }, 1000);
     } else {
-        window.location.href = "./auth.html"
+        window.location.href = "./splash.html"
     }
 
     $(".float-end").click(function() {
@@ -185,7 +185,7 @@ angular.module('lycan').controller('indexCtrl', function($scope, $timeout) {
         window.location.reload()
     });
 
-    $(".cn-button").click(function() {
+    $("#luna").click(function() {
 
         // get output div reference
         var output = document.getElementById("output");
@@ -205,9 +205,8 @@ angular.module('lycan').controller('indexCtrl', function($scope, $timeout) {
         };
 
 
-
         recognition.onspeechend = function() {
-            action.innerHTML = '<h5 id="soutput">speechSynthesis stop click luna to commence</h5>'
+            action.innerHTML = '<h5 id="soutput">SpeechSynthesis stop pls. reinitialize</h5>'
             recognition.stop();
         }
 
